@@ -28,7 +28,7 @@ pipeline {
      
     stage ('Build') {
       steps {
-          sh 'docker build -t dockerHubRepoName/imageName .'
+          sh 'docker build -tf dockerHubRepoName/imageName Dockerfiles/dockerfile.fe'
     }
 }
      stage ('Login') {
