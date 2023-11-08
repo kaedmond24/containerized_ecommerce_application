@@ -31,7 +31,7 @@ resource "aws_ecs_task_definition" "ecommerce-frontend-task" {
   [
   {
       "name": "ecommerce-frontend-container",
-      "image": "kaedmond24/ecommerce_fe_app:latest",
+      "image": "lani23/app8fe:latest",
       "logConfiguration": {
         "logDriver": "awslogs",
         "options": {
@@ -53,8 +53,8 @@ resource "aws_ecs_task_definition" "ecommerce-frontend-task" {
   network_mode             = "awsvpc"
   memory                   = "1024"
   cpu                      = "512"
-  execution_role_arn       = "arn:aws:iam::063015932017:role/ecsTaskExecutionRolePolicy" # UPDATE ROLE
-  task_role_arn            = "arn:aws:iam::063015932017:role/ecsTaskExecutionRolePolicy" # UPDATE ROLE
+  execution_role_arn       = "arn:aws:iam::988716448983:role/ECSTaskExecutionRole"
+  task_role_arn            = "arn:aws:iam::988716448983:role/ECSTaskExecutionRole"
 
 }
 
