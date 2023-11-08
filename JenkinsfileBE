@@ -13,7 +13,7 @@ pipeline {
         pip install pip --upgrade
         pip install -r backend/requirements.txt
         pip install mysqlclient
-        python backend/manage.py backend/account backend/product
+        python backend/manage.py test backend/account backend/product
         '''
      }
 
