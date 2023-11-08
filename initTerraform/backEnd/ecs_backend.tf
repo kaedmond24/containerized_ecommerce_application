@@ -32,7 +32,7 @@ resource "aws_ecs_task_definition" "ecommerce-backend-task" {
   [
   {
       "name": "ecommerce-backend-container",
-      "image": "kaedmond24/ecommerceapp:latest",
+      "image": "lani23/app8be:latest",
       "logConfiguration": {
         "logDriver": "awslogs",
         "options": {
@@ -76,11 +76,4 @@ resource "aws_ecs_service" "ecommerce-backend-service" {
     assign_public_ip = false
     security_groups  = [aws_security_group.ingress_app_backend.id]
   }
-
-  #   load_balancer {
-  #     target_group_arn = aws_lb_target_group.bank-app.arn
-  #     container_name   = "bank-container-d7"
-  #     container_port   = 8000
-  #   }
-
 }
