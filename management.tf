@@ -18,7 +18,7 @@ provider "aws" {
 resource "aws_instance" "jnk_management_server" {
   ami                         = var.ami
   instance_type               = var.instance_type
-  vpc_security_group_ids      = [var.var.default_security_sg]
+  vpc_security_group_ids      = [var.default_security_sg]
   key_name                    = var.key_name
   subnet_id                   = var.default_subnet_id
   associate_public_ip_address = "true"
@@ -55,7 +55,7 @@ resource "aws_instance" "jnk_iac_server" {
 resource "aws_instance" "jnk_container_server" {
   ami                         = var.ami
   instance_type               = var.instance_type
-  vpc_security_group_ids      = [var.var.default_security_sg]
+  vpc_security_group_ids      = [var.default_security_sg]
   key_name                    = var.key_name
   subnet_id                   = var.default_subnet_id
   associate_public_ip_address = "true"
