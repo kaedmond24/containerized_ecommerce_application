@@ -102,7 +102,7 @@ class ProductApisAuthTest(ProductApisSetUp):
         user = User.objects.get(username='testuser') # not an admin
         view = ProductCreateView.as_view()
 
-        image = SimpleUploadedFile("computer_chair.jpg", content=open("backend\static\images\computer_chair.jpg", 'rb').read(), content_type='image/jpeg')
+        image = SimpleUploadedFile("computer_chair.jpg", content=open("backend/static/images/computer_chair.jpg", 'rb').read(), content_type='image/jpeg')
 
         new_product = {
             "name": "smart phone",
@@ -124,7 +124,7 @@ class ProductApisAuthTest(ProductApisSetUp):
         user = User.objects.get(username='admin') # admin user
         view = ProductCreateView.as_view()
 
-        image = SimpleUploadedFile("computer_chair.jpg", content=open("backend\static\images\computer_chair.jpg", 'rb').read(), content_type='image/jpeg')
+        image = SimpleUploadedFile("computer_chair.jpg", content=open("backend/static/images/computer_chair.jpg", 'rb').read(), content_type='image/jpeg')
 
         new_product = {
             "name": "smart phone",
