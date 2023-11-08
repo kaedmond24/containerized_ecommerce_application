@@ -11,7 +11,7 @@ pipeline {
         python3.7 -m venv test
         source test/bin/activate
         pip install pip --upgrade
-        pip install -r requirements.txt
+        pip install -r backend/requirements.txt
         pip install mysqlclient
         python backend/manage.py backend/account backend/product
         '''
