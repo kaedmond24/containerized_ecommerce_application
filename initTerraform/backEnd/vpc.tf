@@ -1,3 +1,4 @@
+# Create VPC
 resource "aws_vpc" "app_vpc" {
   cidr_block = "10.0.0.0/16"
 
@@ -6,7 +7,7 @@ resource "aws_vpc" "app_vpc" {
     "Project" = "deployment 8"
   }
 }
-
+# Create Subnets
 resource "aws_subnet" "public_a" {
   vpc_id            = aws_vpc.app_vpc.id
   cidr_block        = "10.0.1.0/24"
@@ -40,6 +41,29 @@ resource "aws_subnet" "public_b" {
   }
 }
 
+# Create Gateways
+resource "aws_internet_gateway" "igw" {
+  vpc_id = aws_vpc.app_vpc.id
+}
+
+resource "aws_eip" "elastic-ip" {
+  domain = "vpc"
+}
+resource "aws_nat_gateway" "ngw" {
+  subnet_id     = aws_subnet.public_a.id
+  allocation_id = aws_eip.elastic-ip.id
+}
+
+# Create Route Tables
+resource "aws_route_table" "public" {
+  vpc_id = aws_vpc.app_vpc.id
+}
+
+resource "aws_route_table" "private" {
+  vpc_id = aws_vpc.app_vpc.id
+}
+
+# Create Routes
 resource "aws_route_table_association" "public_a_subnet" {
   subnet_id      = aws_subnet.public_a.id
   route_table_id = aws_route_table.public.id
@@ -55,29 +79,19 @@ resource "aws_route_table_association" "public_b_subnet" {
   route_table_id = aws_route_table.public.id
 }
 
-resource "aws_internet_gateway" "igw" {
-  vpc_id = aws_vpc.app_vpc.id
-}
-
-# resource "aws_nat_gateway" "ngw" {
-#   subnet_id     = aws_subnet.public_a.id
-#   allocation_id = aws_eip.elastic-ip.id
-# }
-
-resource "aws_route_table" "public" {
-  vpc_id = aws_vpc.app_vpc.id
-}
-
-resource "aws_route_table" "private" {
-  vpc_id = aws_vpc.app_vpc.id
-}
-
 resource "aws_route" "public_igw" {
   route_table_id         = aws_route_table.public.id
   destination_cidr_block = "0.0.0.0/0"
   gateway_id             = aws_internet_gateway.igw.id
 }
 
+ resource "aws_route" "private_ngw" {
+  route_table_id         = aws_route_table.private.id
+  destination_cidr_block = "0.0.0.0/0"
+  nat_gateway_id         = aws_nat_gateway.ngw.id
+}
+
+# Create Security Groups
 resource "aws_security_group" "httpalb" {
   name        = "httpalb"
   description = "HTTP ALB traffic"
@@ -143,7 +157,7 @@ resource "aws_security_group" "ingress_app_frontend" {
 # Create Application Load Balancer #
 ####################################
 
-# Configure Traget Group Provider
+# Configure Target Group Provider
 resource "aws_lb_target_group" "ecommerce-app-tg" {
   name        = "ecommerce-app-tg"
   port        = 3000

@@ -4,6 +4,8 @@ provider "aws" {
   region     = "us-east-1"
 }
 
+terraform import aws_ecs_cluster.ecommerce-d8-cluster ecommerce-d8-cluster
+
 # Cluster
 # resource "aws_ecs_cluster" "ecommerce-d8-cluster" {
 #   name = "ecommerce-d8-cluster"
