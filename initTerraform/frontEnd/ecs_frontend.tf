@@ -35,7 +35,7 @@ resource "aws_ecs_task_definition" "ecommerce-frontend-task" {
       "logConfiguration": {
         "logDriver": "awslogs",
         "options": {
-          "awslogs-group": "/ecs/eccomerce-logs",
+          "awslogs-group": "/ecs/ecommerce-logs",
           "awslogs-region": "us-east-1",
           "awslogs-stream-prefix": "ecs"
         }
