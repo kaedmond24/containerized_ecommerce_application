@@ -1,34 +1,27 @@
 pipeline {
   agent {label 'awsDeploy2'}
   environment{
-      DOCKERHUB_CREDENTIALS = credentials('repoName-dockerhub')
+      DOCKERHUB_CREDENTIALS = credentials('lani23-dockerhub')
       }
    stages {
      
     stage ('Test') {
       steps {
         sh '''#!/bin/bash
-        // python3.7 -m venv test
-        // source test/bin/activate
-        // pip install pip --upgrade
-        // pip install -r requirements.txt
-        // pip install mysqlclient
-        // pip install pytest
-        // py.test --verbose --junit-xml test-reports/results.xml
+        python3.7 -m venv test
+        source test/bin/activate
+        pip install pip --upgrade
+        pip install -r backend/requirements.txt
+        pip install mysqlclient
+        python backend/manage.py test backend/account backend/product
         '''
      }
 
-       post{
-        always {
-          junit 'test-reports/results.xml'
-        }
-       
-      }
    }
      
     stage ('Build') {
       steps {
-          sh 'docker build -tf dockerHubRepoName/imageName Dockerfiles/dockerfile.be'
+          sh 'docker build -t lani23/app8be -f Dockerfiles/dockerfile.be .'
     }
 }
      stage ('Login') {
@@ -39,7 +32,7 @@ pipeline {
 
      stage ('Push') {
         steps {
-            sh 'docker push dockerHubRepoName/imageName'
+            sh 'docker push lani23/app8be'
   }
      }
 
