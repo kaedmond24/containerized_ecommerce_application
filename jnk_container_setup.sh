@@ -26,3 +26,8 @@ apt-get install -y python3.7-venv
 apt-get install -y build-essential
 apt-get install -y libmysqlclient-dev 
 apt-get install -y python3.7-dev
+
+# Docker Post Installation 
+groupadd docker
+usermod -aG docker $USER
+newgrp docker
