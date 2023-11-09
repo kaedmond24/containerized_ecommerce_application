@@ -59,10 +59,10 @@ resource "aws_internet_gateway" "igw" {
   vpc_id = aws_vpc.app_vpc.id
 }
 
-resource "aws_nat_gateway" "ngw" {
-  subnet_id     = aws_subnet.public_a.id
-  allocation_id = aws_eip.elastic-ip.id
-}
+# resource "aws_nat_gateway" "ngw" {
+#   subnet_id     = aws_subnet.public_a.id
+#   allocation_id = aws_eip.elastic-ip.id
+# }
 
 resource "aws_route_table" "public" {
   vpc_id = aws_vpc.app_vpc.id
@@ -145,7 +145,7 @@ resource "aws_security_group" "ingress_app_frontend" {
 
 # Configure Traget Group Provider
 resource "aws_lb_target_group" "ecommerce-app-tg" {
-  name        = "ecommerce_app_tg"
+  name        = "ecommerce-app-tg"
   port        = 3000
   protocol    = "HTTP"
   target_type = "ip"
