@@ -62,7 +62,7 @@ resource "aws_ecs_task_definition" "ecommerce-backend-task" {
 # ECS Service
 resource "aws_ecs_service" "ecommerce-backend-service" {
   name                 = "ecommerce-backend-service"
-  cluster              = aws_ecs_cluster.aws-ecs-cluster.id
+  cluster              = aws_ecs_cluster.ecommerce-d8-cluster.id
   task_definition      = aws_ecs_task_definition.ecommerce-backend-task.arn
   launch_type          = "FARGATE"
   scheduling_strategy  = "REPLICA"
