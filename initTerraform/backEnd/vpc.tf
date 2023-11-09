@@ -144,7 +144,7 @@ resource "aws_security_group" "ingress_app_frontend" {
 ####################################
 
 # Configure Traget Group Provider
-resource "aws_lb_target_group" "ecommerce_app_tg" {
+resource "aws_lb_target_group" "ecommerce-app-tg" {
   name        = "ecommerce_app_tg"
   port        = 3000
   protocol    = "HTTP"
@@ -184,7 +184,7 @@ resource "aws_alb_listener" "ecommerce_app_listener" {
 
   default_action {
     type             = "forward"
-    target_group_arn = aws_lb_target_group.ecommerce_app_tg.arn
+    target_group_arn = aws_lb_target_group.ecommerce-app-tg.arn
   }
 }
 
