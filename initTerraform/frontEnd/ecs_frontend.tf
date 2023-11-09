@@ -5,13 +5,13 @@ provider "aws" {
 }
 
 # Cluster
-resource "aws_ecs_cluster" "ecommerce-d8-cluster" {
-  name = "ecommerce-d8-cluster"
-  tags = {
-    Name      = "ecommerce-ecs"
-    "Project" = "deployment 8"
-  }
-}
+# resource "aws_ecs_cluster" "ecommerce-d8-cluster" {
+#   name = "ecommerce-d8-cluster"
+#   tags = {
+#     Name      = "ecommerce-ecs"
+#     "Project" = "deployment 8"
+#   }
+# }
 
 resource "aws_cloudwatch_log_group" "log-group" {
   name = "/ecs/ecommerce-logs"
@@ -61,7 +61,7 @@ resource "aws_ecs_task_definition" "ecommerce-frontend-task" {
 # ECS Service
 resource "aws_ecs_service" "ecommerce-frontend-service" {
   name                 = "ecommerce-frontend-service"
-  cluster              = aws_ecs_cluster.aws-ecs-cluster.id
+  cluster              = aws_ecs_cluster.eccomerce-d8-cluster.id
   task_definition      = aws_ecs_task_definition.ecommerce-frontend-task.arn
   launch_type          = "FARGATE"
   scheduling_strategy  = "REPLICA"
@@ -78,7 +78,7 @@ resource "aws_ecs_service" "ecommerce-frontend-service" {
   }
 
   load_balancer {
-    target_group_arn = aws_lb_target_group.ecommerce_app.arn
+    target_group_arn = aws_lb_target_group.ecommerce-app-tg.arn
     container_name   = "ecommerce-frontend-container"
     container_port   = 3000
   }
