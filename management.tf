@@ -54,7 +54,7 @@ resource "aws_instance" "jnk_iac_server" {
 # >>>>> Jenkins Container Server <<<<< #
 resource "aws_instance" "jnk_container_server" {
   ami                         = var.ami
-  instance_type               = var.instance_type
+  instance_type               = var.container_instance_type
   vpc_security_group_ids      = [var.default_security_sg]
   key_name                    = var.key_name
   subnet_id                   = var.default_subnet_id
