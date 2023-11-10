@@ -1,9 +1,15 @@
+############
+# Provider #
+############
 provider "aws" {
   access_key = var.aws_access_key
   secret_key = var.aws_secret_key
   region     = "us-east-1"
 }
 
+##############
+# Create VPC #
+##############
 resource "aws_vpc" "app_vpc" {
   cidr_block = "10.0.0.0/16"
 
@@ -13,6 +19,9 @@ resource "aws_vpc" "app_vpc" {
   }
 }
 
+##################
+# Create Subnets #
+##################
 resource "aws_subnet" "public_a" {
   vpc_id                  = aws_vpc.app_vpc.id
   cidr_block              = "10.0.1.0/24"
@@ -48,6 +57,9 @@ resource "aws_subnet" "public_b" {
   }
 }
 
+###########################
+# Route Table Association #
+###########################
 resource "aws_route_table_association" "public_a_subnet" {
   subnet_id      = aws_subnet.public_a.id
   route_table_id = aws_route_table.public.id
@@ -63,15 +75,28 @@ resource "aws_route_table_association" "public_b_subnet" {
   route_table_id = aws_route_table.public.id
 }
 
+######################
+# Elastic IP Address #
+######################
+resource "aws_eip" "elastic-ip" {
+  domain = "vpc"
+}
+
+#####################
+# Internet Gateways #
+#####################
 resource "aws_internet_gateway" "igw" {
   vpc_id = aws_vpc.app_vpc.id
 }
 
-# resource "aws_nat_gateway" "ngw" {
-#   subnet_id     = aws_subnet.public_a.id
-#   allocation_id = aws_eip.elastic-ip.id
-# }
+resource "aws_nat_gateway" "ngw" {
+  subnet_id     = aws_subnet.public_a.id
+  allocation_id = aws_eip.elastic-ip.id
+}
 
+################
+# Route Tables #
+################
 resource "aws_route_table" "public" {
   vpc_id = aws_vpc.app_vpc.id
 }
@@ -80,12 +105,24 @@ resource "aws_route_table" "private" {
   vpc_id = aws_vpc.app_vpc.id
 }
 
+#############
+# RT Routes #
+#############
 resource "aws_route" "public_igw" {
   route_table_id         = aws_route_table.public.id
   destination_cidr_block = "0.0.0.0/0"
   gateway_id             = aws_internet_gateway.igw.id
 }
 
+resource "aws_route" "private_ngw" {
+  route_table_id         = aws_route_table.private.id
+  destination_cidr_block = "0.0.0.0/0"
+  nat_gateway_id         = aws_nat_gateway.ngw.id
+}
+
+###################
+# Security Groups #
+###################
 resource "aws_security_group" "httpalb" {
   name        = "httpalb"
   description = "HTTP ALB traffic"
@@ -167,7 +204,7 @@ resource "aws_lb_target_group" "ecommerce-app-tg" {
   depends_on = [aws_alb.ecommerce_app]
 }
 
-#Application Load Balancer
+# Application Load Balancer
 resource "aws_alb" "ecommerce_app" {
   name               = "ecommerce-lb-d8"
   internal           = false
@@ -196,17 +233,24 @@ resource "aws_alb_listener" "ecommerce_app_listener" {
   }
 }
 
+###############
+# Output Data #
+###############
 output "alb_url" {
   value = "http://${aws_alb.ecommerce_app.dns_name}"
 }
 
-# output "my_vpc" {
-#   value = aws_vpc.app_vpc.id
-# }
-# output "my_pub_subnetA_id" {
-#   value = aws_subnet.public_a.id
-# }
+output "my_vpc_id" {
+  value = aws_vpc.app_vpc.id
+}
+output "my_public_subnet_A_id" {
+  value = aws_subnet.public_a.id
+}
 
-# output "my_pub_subnetB_id" {
-#   value = aws_subnet.public_b.id
-# }
+output "my_public_subnet_B_id" {
+  value = aws_subnet.public_b.id
+}
+
+output "my_private_subnet_A_id" {
+  value = aws_subnet.private_a.id
+}
