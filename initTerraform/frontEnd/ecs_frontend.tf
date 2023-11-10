@@ -90,8 +90,8 @@ data "aws_lb_target_group" "my_alb_tg" {
   name = "ecommerce-app-tg"
 }
 
-resource "aws_cloudwatch_log_group" "log-group" {
-  name = "/ecs/ecommerce-logs"
+resource "aws_cloudwatch_log_group" "log-fe-group" {
+  name = "/ecs/ecommerce-fe-logs"
   tags = {
     Application = "ecommerce-app"
     "Project"   = "deployment 8"
@@ -111,7 +111,7 @@ resource "aws_ecs_task_definition" "ecommerce-frontend-task" {
       "logConfiguration": {
         "logDriver": "awslogs",
         "options": {
-          "awslogs-group": "/ecs/ecommerce-logs",
+          "awslogs-group": "/ecs/ecommerce-fe-logs",
           "awslogs-region": "us-east-1",
           "awslogs-stream-prefix": "ecs"
         }
