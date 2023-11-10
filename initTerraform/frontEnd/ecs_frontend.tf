@@ -25,12 +25,8 @@ data "aws_vpc" "my_vpc" {
     name   = "tag:Name"
     values = ["App VPC D8"]
   }
-
-  filter {
-    name   = "Project"
-    values = ["deployment 8"]
-  }
 }
+
 
 data "aws_subnet" "my_public_subnet_A" {
   filter {
@@ -39,10 +35,10 @@ data "aws_subnet" "my_public_subnet_A" {
 
   }
 
-  filter {
-    name   = "Projects"
-    values = ["deployment 8"]
-  }
+  # filter {
+  #   name   = "Project"
+  #   values = ["deployment 8"]
+  # }
 
 }
 
@@ -54,7 +50,7 @@ data "aws_subnet" "my_public_subnet_B" {
   }
 
   filter {
-    name   = "Projects"
+    name   = "Project"
     values = ["deployment 8"]
   }
 
