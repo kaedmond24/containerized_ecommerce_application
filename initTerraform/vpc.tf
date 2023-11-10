@@ -1,3 +1,9 @@
+provider "aws" {
+  access_key = var.aws_access_key
+  secret_key = var.aws_secret_key
+  region     = "us-east-1"
+}
+
 resource "aws_vpc" "app_vpc" {
   cidr_block = "10.0.0.0/16"
 
@@ -143,7 +149,7 @@ resource "aws_security_group" "ingress_app_frontend" {
 # Create Application Load Balancer #
 ####################################
 
-# Configure Traget Group Provider
+# Configure Target Group Provider
 resource "aws_lb_target_group" "ecommerce-app-tg" {
   name        = "ecommerce-app-tg"
   port        = 3000
@@ -191,3 +197,14 @@ resource "aws_alb_listener" "ecommerce_app_listener" {
 output "alb_url" {
   value = "http://${aws_alb.ecommerce_app.dns_name}"
 }
+
+# output "my_vpc" {
+#   value = aws_vpc.app_vpc.id
+# }
+# output "my_pub_subnetA_id" {
+#   value = aws_subnet.public_a.id
+# }
+
+# output "my_pub_subnetB_id" {
+#   value = aws_subnet.public_b.id
+# }

@@ -1,7 +1,27 @@
-provider "aws" {
-  access_key = var.aws_access_key
-  secret_key = var.aws_secret_key
-  region     = "us-east-1"
+# provider "aws" {
+#   access_key = var.aws_access_key
+#   secret_key = var.aws_secret_key
+#   region     = "us-east-1"
+
+# }
+
+# module "app_vpc" {
+#   source            = ".."
+#   subnet_be         = var.aws_subnet.private_a.id
+#   security_group_be = var.aws_security_group.ingress_app_backend.id
+# }
+
+data "aws_subnet" "my_priv_subnet_B" {
+  filter {
+    name   = "tag:Name"
+    values = "private | us-east-1a"
+
+  }
+
+  filter {
+    name   = "Projects"
+    values = "deployment 8"
+  }
 
 }
 
@@ -71,9 +91,13 @@ resource "aws_ecs_service" "ecommerce-backend-service" {
 
   network_configuration {
     subnets = [
-      aws_subnet.private_a.id
+      module.app_vpc.subnet_be
     ]
     assign_public_ip = false
-    security_groups  = [aws_security_group.ingress_app_backend.id]
+    security_groups  = [module.app_vpc.security_group_be]
   }
 }
+
+# output "my_ecs_cluster" {
+#   value = aws_ecs_cluster.ecommerce-d8-cluster
+# }
