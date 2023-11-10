@@ -4,7 +4,7 @@ provider "aws" {
   region     = "us-east-1"
 }
 
-terraform import aws_ecs_cluster.ecommerce-d8-cluster ecommerce-d8-cluster
+# terraform import aws_ecs_cluster.ecommerce-d8-cluster ecommerce-d8-cluster
 
 # Cluster
 # resource "aws_ecs_cluster" "ecommerce-d8-cluster" {
@@ -13,13 +13,6 @@ terraform import aws_ecs_cluster.ecommerce-d8-cluster ecommerce-d8-cluster
 #     Name      = "ecommerce-ecs"
 #     "Project" = "deployment 8"
 #   }
-# }
-
-# module "app_vpc" {
-#   source            = ".."
-#   subnet_be         = var.aws_subnet.private_a.id
-#   security_group_be = var.aws_security_group.ingress_app_backend.id
-#   tg_arn =            aws_lb_target_group.ecommerce-app-tg.arn
 # }
 
 data "aws_vpc" "my_vpc" {
@@ -85,7 +78,7 @@ data "aws_lb_target_group" "my_alb_tg" {
 }
 
 resource "aws_cloudwatch_log_group" "log-fe-group" {
-  name = "/ecs/ecommerce-fe-logs"
+  name = "/ecs/ecommerce-frontend-logs"
   tags = {
     Application = "ecommerce-app"
     "Project"   = "deployment 8"
@@ -105,7 +98,7 @@ resource "aws_ecs_task_definition" "ecommerce-frontend-task" {
       "logConfiguration": {
         "logDriver": "awslogs",
         "options": {
-          "awslogs-group": "/ecs/ecommerce-fe-logs",
+          "awslogs-group": "/ecs/ecommerce-frontend-logs",
           "awslogs-region": "us-east-1",
           "awslogs-stream-prefix": "ecs"
         }
