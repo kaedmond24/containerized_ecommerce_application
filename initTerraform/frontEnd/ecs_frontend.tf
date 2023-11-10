@@ -29,6 +29,7 @@ data "aws_vpc" "my_vpc" {
 
 
 data "aws_subnet" "my_public_subnet_A" {
+  cidr_block = "10.0.1.0/24"
   filter {
     name   = "tag:Name"
     values = ["public | us-east-1a"]
@@ -37,12 +38,13 @@ data "aws_subnet" "my_public_subnet_A" {
 
   filter {
     name   = "tag:Project"
-    values = "deployment 8"
+    values = ["deployment 8"]
   }
 
 }
 
 data "aws_subnet" "my_public_subnet_B" {
+  cidr_block = "10.0.2.0/24"
   filter {
     name   = "tag:Name"
     values = ["public | us-east-1b"]
@@ -50,7 +52,7 @@ data "aws_subnet" "my_public_subnet_B" {
 
   filter {
     name   = "tag:Project"
-    values = "deployment 8"
+    values = ["deployment 8"]
   }
 }
 
@@ -60,15 +62,6 @@ data "aws_ecs_cluster" "my_ecs_cluster" {
 
 data "aws_lb_target_group" "my_tg" {
   name = "ecommerce-app-tg"
-}
-
-
-resource "aws_cloudwatch_log_group" "log-group" {
-  name = "/ecs/ecommerce-logs"
-  tags = {
-    Application = "ecommerce-app"
-    "Project"   = "deployment 8"
-  }
 }
 
 data "aws_security_group" "my_security_group" {
@@ -81,7 +74,7 @@ data "aws_security_group" "my_security_group" {
 
   filter {
     name   = "tag:Project"
-    values = "deployment 8"
+    values = ["deployment 8"]
   }
 }
 
