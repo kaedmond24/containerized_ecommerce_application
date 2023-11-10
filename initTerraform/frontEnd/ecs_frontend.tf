@@ -82,12 +82,20 @@ data "aws_security_group" "my_security_group" {
 
   filter {
     name   = "tag:Name"
-    values = "ingress-app_frontend"
+    values = ["ingress-app_frontend"]
   }
 }
 
 data "aws_lb_target_group" "my_alb_tg" {
+  name = "ecommerce-app-tg"
+}
 
+resource "aws_cloudwatch_log_group" "log-group" {
+  name = "/ecs/ecommerce-logs"
+  tags = {
+    Application = "ecommerce-app"
+    "Project"   = "deployment 8"
+  }
 }
 
 # Task Definition
