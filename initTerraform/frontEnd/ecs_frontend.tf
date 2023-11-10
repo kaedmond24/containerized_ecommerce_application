@@ -28,20 +28,20 @@ data "aws_vpc" "my_vpc" {
 
   filter {
     name   = "Project"
-    values = "deployment 8"
+    values = ["deployment 8"]
   }
 }
 
 data "aws_subnet" "my_public_subnet_A" {
   filter {
     name   = "tag:Name"
-    values = "public | us-east-1a"
+    values = ["public | us-east-1a"]
 
   }
 
   filter {
     name   = "Projects"
-    values = "deployment 8"
+    values = ["deployment 8"]
   }
 
 }
@@ -49,13 +49,13 @@ data "aws_subnet" "my_public_subnet_A" {
 data "aws_subnet" "my_public_subnet_B" {
   filter {
     name   = "tag:Name"
-    values = "public | us-east-1b"
+    values = ["public | us-east-1b"]
 
   }
 
   filter {
     name   = "Projects"
-    values = "deployment 8"
+    values = ["deployment 8"]
   }
 
 }
