@@ -1,9 +1,16 @@
+############
+# Provider #
+############
 provider "aws" {
   access_key = var.aws_access_key
   secret_key = var.aws_secret_key
   region     = "us-east-1"
 
 }
+
+##################
+# Create Cluster #
+##################
 
 # Cluster
 resource "aws_ecs_cluster" "ecommerce-d8-cluster" {
@@ -60,6 +67,10 @@ resource "aws_ecs_task_definition" "ecommerce-backend-task" {
   task_role_arn            = "arn:aws:iam::988716448983:role/ECSTaskExecutionRole"
 
 }
+
+######################
+# Create ECS Service #
+######################
 
 # ECS Service
 resource "aws_ecs_service" "ecommerce-backend-service" {
