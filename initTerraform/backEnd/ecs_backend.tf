@@ -19,7 +19,7 @@ data "aws_subnet" "my_priv_subnet_B" {
   }
 
   filter {
-    name   = "Projects"
+    name   = "tag:Project"
     values = "deployment 8"
   }
 

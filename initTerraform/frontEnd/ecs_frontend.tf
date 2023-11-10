@@ -35,10 +35,10 @@ data "aws_subnet" "my_public_subnet_A" {
 
   }
 
-  # filter {
-  #   name   = "Project"
-  #   values = ["deployment 8"]
-  # }
+  filter {
+    name   = "tag:Project"
+    values = "deployment 8"
+  }
 
 }
 
@@ -46,14 +46,12 @@ data "aws_subnet" "my_public_subnet_B" {
   filter {
     name   = "tag:Name"
     values = ["public | us-east-1b"]
-
   }
 
   filter {
-    name   = "Project"
-    values = ["deployment 8"]
+    name   = "tag:Project"
+    values = "deployment 8"
   }
-
 }
 
 data "aws_ecs_cluster" "my_ecs_cluster" {
@@ -79,6 +77,11 @@ data "aws_security_group" "my_security_group" {
   filter {
     name   = "tag:Name"
     values = ["ingress-app_frontend"]
+  }
+
+  filter {
+    name   = "tag:Project"
+    values = "deployment 8"
   }
 }
 
