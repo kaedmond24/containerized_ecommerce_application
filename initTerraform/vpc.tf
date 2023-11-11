@@ -240,17 +240,17 @@ output "alb_url" {
   value = "http://${aws_alb.ecommerce_app.dns_name}"
 }
 
-output "my_vpc_id" {
-  value = aws_vpc.app_vpc.id
-}
-output "my_public_subnet_A_id" {
-  value = aws_subnet.public_a.id
-}
+# output "my_vpc_id" {
+#   value = aws_vpc.app_vpc.id
+# }
+# output "my_public_subnet_A_id" {
+#   value = aws_subnet.public_a.id
+# }
 
-output "my_public_subnet_B_id" {
-  value = aws_subnet.public_b.id
-}
+# output "my_public_subnet_B_id" {
+#   value = aws_subnet.public_b.id
+# }
 
-output "my_private_subnet_A_id" {
-  value = aws_subnet.private_a.id
-}
+# output "my_private_subnet_A_id" {
+#   value = aws_subnet.private_a.id
+# }
