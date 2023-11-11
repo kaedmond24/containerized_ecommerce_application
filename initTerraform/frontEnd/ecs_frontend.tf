@@ -84,7 +84,7 @@ resource "aws_ecs_task_definition" "ecommerce-frontend-task" {
   [
   {
       "name": "ecommerce-frontend-container",
-      "image": "lani23/app8fe:latest",
+      "image": "lani23/app8fend:latest",
       "logConfiguration": {
         "logDriver": "awslogs",
         "options": {
