@@ -7,7 +7,7 @@ pipeline {
      
     stage ('Build') {
       steps {
-          sh 'docker build -t lani23/app8fe -f Dockerfiles/dockerfile.fe .'
+          sh 'docker build -t lani23/app8fend -f Dockerfiles/dockerfile.fe .'
     }
 }
      stage ('Login') {
@@ -18,7 +18,7 @@ pipeline {
 
      stage ('Push') {
         steps {
-            sh 'docker push lani23/app8fe'
+            sh 'docker push lani23/app8fend'
   }
      }
 
