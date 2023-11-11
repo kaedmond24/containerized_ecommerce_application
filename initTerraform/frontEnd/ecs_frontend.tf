@@ -127,7 +127,7 @@ resource "aws_ecs_service" "ecommerce-frontend-service" {
       data.aws_subnet.my_public_subnet_B.id
     ]
     assign_public_ip = false
-    security_groups  = [data.aws_security_group.my_security_group.id]
+    security_groups  = ["data.aws_security_group.my_security_group.id"]
   }
 
   load_balancer {
