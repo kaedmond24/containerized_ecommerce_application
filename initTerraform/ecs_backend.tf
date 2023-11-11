@@ -6,7 +6,7 @@
 #   secret_key = var.aws_secret_key
 #   region     = "us-east-1"
 
-# }
+# }'
 
 ##################
 # Create Cluster #
@@ -84,7 +84,7 @@ resource "aws_ecs_service" "ecommerce-backend-service" {
 
   network_configuration {
     subnets = [
-      my_private_subnet_A_id
+     module.vpc.my_private_subnet_A_id
     ]
     assign_public_ip = false
     security_groups  = [aws_security_group.ingress_app_backend.id]
