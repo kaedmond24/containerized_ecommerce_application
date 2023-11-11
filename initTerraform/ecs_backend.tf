@@ -84,7 +84,7 @@ resource "aws_ecs_service" "ecommerce-backend-service" {
 
   network_configuration {
     subnets = [
-     aws_subnet.private_a
+     aws_subnet.private_a.id
     ]
     assign_public_ip = false
     security_groups  = [aws_security_group.ingress_app_backend.id]
