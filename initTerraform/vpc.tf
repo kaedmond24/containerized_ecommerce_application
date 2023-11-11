@@ -141,6 +141,11 @@ resource "aws_security_group" "httpalb" {
     protocol    = "-1"
     cidr_blocks = ["0.0.0.0/0"]
   }
+
+  tags = {
+    Name    = "httpalb"
+    Project = "deployment 8"
+  }
 }
 
 resource "aws_security_group" "ingress_app_backend" {
@@ -161,6 +166,11 @@ resource "aws_security_group" "ingress_app_backend" {
     protocol    = "-1"
     cidr_blocks = ["0.0.0.0/0"]
   }
+
+  tags = {
+    Name    = "ingress-app_backend"
+    Project = "deployment 8"
+  }
 }
 
 resource "aws_security_group" "ingress_app_frontend" {
@@ -180,6 +190,11 @@ resource "aws_security_group" "ingress_app_frontend" {
     to_port     = 0
     protocol    = "-1"
     cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  tags = {
+    Name    = "ingress-app_frontend"
+    Project = "deployment 8"
   }
 }
 
