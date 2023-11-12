@@ -214,7 +214,7 @@ The following files are needed to run this deployment:
 
 ## `System Diagram`
 
-System Architecture [Link](index.html)
+System Architecture [Link](system_design.md)
 
 ## `Issues`
 
